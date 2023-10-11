@@ -23,4 +23,4 @@ pnpm test
 pnpm build
 
 # cleanup
-# rm -rf /tmp/greycat
+rm -rf /tmp/greycat
