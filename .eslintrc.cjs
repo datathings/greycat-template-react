@@ -27,7 +27,7 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
-  ignorePatterns: ['node_modules/', 'gcdata/'],
+  ignorePatterns: ['node_modules/', 'gcdata/', 'dist/'],
   overrides: [
     {
       files: ['common/**/*.tsx?', 'components/**/*.tsx?', 'pages/**/*.tsx?'],
