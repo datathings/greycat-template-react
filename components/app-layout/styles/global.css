@@ -1,6 +1,20 @@
 @font-face {
   font-family: 'Open Sans';
   src: url('@greycat/web/fonts/OpenSans-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Open Sans';
+  src: url('@greycat/web/fonts/OpenSans-Bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Open Sans';
+  src: url('@greycat/web/fonts/OpenSans-Italic.ttf');
+  font-weight: normal;
+  font-style: italic;
 }
 
 /* Default variables */
@@ -11,7 +25,7 @@
   --font-size-md: 14px;
   --font-size-lg: 14px;
   --font-size-xl: 14px;
-  --font-weight: 500;
+  --font-weight: normal;
 
   --spacing: 0.5rem;
 
