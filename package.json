@@ -10,11 +10,11 @@
     "lint": "pnpm lint:app && pnpm lint:server",
     "lint:app": "eslint . --report-unused-disable-directives --max-warnings 0",
     "lint:server": "greycat-lang lint",
-    "gen": "greycat codegen common/project",
+    "gen": "greycat codegen frontend/common/project",
     "test": "greycat test"
   },
   "dependencies": {
-    "@greycat/web": "https://get.greycat.io/files/sdk/web/dev/6.3/6.3.53-dev.tgz",
+    "@greycat/web": "https://get.greycat.io/files/sdk/web/dev/6.3/6.3.57-dev.tgz",
     "@tabler/icons": "2.34.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
