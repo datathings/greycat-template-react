@@ -23,8 +23,10 @@ function WCWrapperInner<K extends keyof HTMLElementTagNameMap>(
         // properties take precedence over attributes
         if (key in r.current) {
           // the comparison is '!==' which only works for primitives & references
-          if (r.current[key] !== value) {
-            r.current[key] = value;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          if ((r.current as any)[key] !== value) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (r.current as any)[key] = value;
           }
         }
       }
