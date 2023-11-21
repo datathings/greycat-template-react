@@ -12,7 +12,8 @@ A GreyCat Web application template.
 - Frontend:
   ```bash
   pnpm install
-  pnpm d
+  pnpm dev
+  ```
 
 ## Changes before development
 - Ensure the versions are updated in `package.json`, mainly for `@greycat/web`
