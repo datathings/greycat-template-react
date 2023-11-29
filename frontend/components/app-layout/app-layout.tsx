@@ -4,9 +4,10 @@ import BrightnessUpIcon from '@tabler/icons/brightness-up.svg?raw';
 import MoonIcon from '@tabler/icons/moon.svg?raw';
 import HomeIcon from '@tabler/icons/home.svg?raw';
 import TableIcon from '@tabler/icons/table.svg?raw';
-import BrandReactIcon from '@tabler/icons/brand-react.svg?raw';
+import ComponentsIcon from '@tabler/icons/components.svg?raw';
 import InfoSquareRoundedIcon from '@tabler/icons/info-square-rounded.svg?raw';
 import LockOpenIcon from '@tabler/icons/lock-open.svg?raw';
+import BrandReactIcon from '@tabler/icons/brand-react.svg?raw';
 import LogoIcon from './logo.svg?raw';
 import { icon } from '../../common/utils';
 import { APP_LAYOUT_THEME } from '../../common/constants';
@@ -41,6 +42,54 @@ export class AppLayout extends HTMLElement {
   }
 
   connectedCallback() {
+    this.appendChild(
+      <aside>
+        <nav>
+          <ul>
+            <li className="brand">
+              <a href={this.parent}>{icon(LogoIcon)}</a>
+            </li>
+            {this._pageNavItems('right')}
+          </ul>
+          <ul>{this._extraNavItems()}</ul>
+        </nav>
+      </aside>,
+    );
+
+    this.appendChild(
+      <nav className="responsive">
+        <ul>
+          <li className="brand">
+            <a href={this.parent}>{icon(LogoIcon)}</a>
+          </li>
+          {this._pageNavItems('bottom')}
+        </ul>
+        <ul>{this._extraNavItems()}</ul>
+      </nav>,
+    );
+
+    this.appendChild(this.main);
+  }
+
+  private _pageNavItems(placement: 'right' | 'bottom'): HTMLLIElement[] {
+    const items = [
+      this._createNavItem('Index', '.', icon(HomeIcon), this.parent, placement),
+      this._createNavItem('Table', 'table', icon(TableIcon), undefined, placement),
+      this._createNavItem('About', 'about', icon(InfoSquareRoundedIcon), undefined, placement),
+      this._createNavItem('Shoelace', 'shoelace', icon(ComponentsIcon), undefined, placement),
+      this._createNavItem('React', 'react', icon(BrandReactIcon), undefined, placement),
+    ];
+
+    if (greycat.default.hasPermission('protected')) {
+      items.push(
+        this._createNavItem('Protected', 'protected', icon(LockOpenIcon), undefined, placement),
+      );
+    }
+
+    return items;
+  }
+
+  private _extraNavItems(): HTMLLIElement[] {
     const lightIcon = icon(BrightnessUpIcon);
     const darkIcon = icon(MoonIcon);
     const initialTheme = getCurrentTheme();
@@ -65,99 +114,35 @@ export class AppLayout extends HTMLElement {
       </button>
     ) as HTMLButtonElement;
 
-    const parent = this.parent;
-    const current = this.current;
+    return [
+      <li>{toggleThemeBtn}</li>,
+      <li>
+        <button role="link" onclick={this.signout}>
+          {icon(LogoutIcon)}
+        </button>
+      </li>,
+    ] as HTMLLIElement[];
+  }
 
-    this.appendChild(
-      <aside>
-        <nav>
-          <ul>
-            <li className="brand">
-              <a href={parent}>{icon(LogoIcon)}</a>
-            </li>
-            <li>
-              <a
-                className={current === 'index' ? 'active' : undefined}
-                href={parent}
-                data-tooltip="Index"
-                data-placement="right"
-              >
-                {icon(HomeIcon)}
-              </a>
-            </li>
-            <li>
-              <a
-                className={current === 'table' ? 'active' : undefined}
-                href={`${parent}/table/`}
-                data-tooltip="Table"
-                data-placement="right"
-              >
-                {icon(TableIcon)}
-              </a>
-            </li>
-            <li>
-              <a
-                className={current === 'react' ? 'active' : undefined}
-                href={`${parent}/react/`}
-                data-tooltip="React"
-                data-placement="right"
-              >
-                {icon(BrandReactIcon)}
-              </a>
-            </li>
-            {/* Example menu entry: */}
-            {/* <li>
-          <a
-            className={current === 'routeName' ? 'active' : undefined}
-            href={`${parent}/routeName/`}
-            data-tooltip="Route Name"
-            data-placement="right"
-          >
-            {icon(RouteIcon)}
-          </a>
-        </li> */}
-            <li>
-              <a
-                className={current === 'about' ? 'active' : undefined}
-                href={`${parent}/about/`}
-                data-tooltip="About"
-                data-placement="right"
-              >
-                {icon(InfoSquareRoundedIcon)}
-              </a>
-            </li>
-            {greycat.default.hasPermission('protected') ? (
-              <li>
-                <a
-                  className={current === 'protected' ? 'active' : undefined}
-                  href={`${parent}/protected/`}
-                  data-tooltip="Protected"
-                  data-placement="right"
-                >
-                  {icon(LockOpenIcon)}
-                </a>
-              </li>
-            ) : undefined}
-          </ul>
-
-          <ul>
-            <li>{toggleThemeBtn}</li>
-            <li>
-              <button
-                role="link"
-                onclick={this.signout}
-                data-tooltip="Logout"
-                data-placement="right"
-              >
-                {icon(LogoutIcon)}
-              </button>
-            </li>
-          </ul>
-        </nav>
-      </aside>,
-    );
-
-    this.appendChild(this.main);
+  private _createNavItem(
+    label: string,
+    route: string,
+    icon: SVGSVGElement,
+    href = `${this.parent}/${route}/`,
+    placement: 'right' | 'bottom',
+  ): HTMLLIElement {
+    return (
+      <li>
+        <a
+          className={this.current === route ? 'active' : undefined}
+          href={href}
+          data-tooltip={label}
+          data-placement={placement}
+        >
+          {icon}
+        </a>
+      </li>
+    ) as HTMLLIElement;
   }
 
   disconnectedCallback() {

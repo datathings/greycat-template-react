@@ -43,6 +43,7 @@ export default defineConfig(({ mode }) => ({
         table: resolve(__dirname, 'frontend/pages/table/index.html'),
         react: resolve(__dirname, 'frontend/pages/react/index.html'),
         about: resolve(__dirname, 'frontend/pages/about/index.html'),
+        shoelace: resolve(__dirname, 'frontend/pages/shoelace/index.html'),
         protected: resolve(__dirname, 'frontend/pages/protected/index.html'),
       },
     },
